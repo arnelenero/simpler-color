@@ -1,0 +1,84 @@
+{
+  "name": "simpler-color",
+  "version": "0.0.1",
+  "description": "Simpler Color - Create your own complete color system fast and easy!",
+  "keywords": [
+    "javascript",
+    "color",
+    "system",
+    "helper",
+    "easy"
+  ],
+  "author": "Arnel Enero <aenero@gmail.com>",
+  "license": "MIT",
+  "repository": "github:arnelenero/simpler-color",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "typings": "types/index.d.ts",
+  "files": [
+    "lib",
+    "es",
+    "types"
+  ],
+  "scripts": {
+    "build:lib": "cross-env BABEL_ENV=commonjs babel build --out-dir lib",
+    "build:es": "babel build --out-dir es",
+    "build": "npm run clean && npm run compile && npm run build:lib && npm run build:es",
+    "clean": "rimraf build types lib es",
+    "compile": "tsc",
+    "prepare": "npm test",
+    "pretest": "npm run build",
+    "test": "jest",
+    "test:cov": "npm test -- --coverage"
+  },
+  "dependencies": {
+    "color": "^4.2.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.17.3",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@types/color": "^3.0.3",
+    "@types/jest": "^27.4.1",
+    "@types/node": "^17.0.21",
+    "babel-jest": "^27.5.1",
+    "cross-env": "^5.2.0",
+    "eslint": "^8.8.0",
+    "jest": "^27.5.1",
+    "prettier": "^2.5.1",
+    "rimraf": "^2.6.2",
+    "ts-jest": "^27.1.3",
+    "typescript": "^4.6.2"
+  },
+  "jest": {
+    "preset": "ts-jest/presets/js-with-babel",
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/build/",
+      "<rootDir>/es/",
+      "<rootDir>/lib/",
+      "<rootDir>/types/"
+    ],
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/build/",
+      "<rootDir>/es/",
+      "<rootDir>/lib/",
+      "<rootDir>/types/"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/build/",
+      "<rootDir>/es/",
+      "<rootDir>/lib/",
+      "<rootDir>/types/"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!src/**/index.ts",
+      "!src/index.ts"
+    ]
+  }
+}
