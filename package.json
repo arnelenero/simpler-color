@@ -7,7 +7,8 @@
     "color",
     "system",
     "helper",
-    "easy"
+    "CSS",
+    "style"
   ],
   "author": "Arnel Enero <aenero@gmail.com>",
   "license": "MIT",
@@ -53,7 +54,7 @@
     "typescript": "^4.6.2"
   },
   "jest": {
-    "preset": "ts-jest/presets/js-with-babel",
+    "preset": "ts-jest",
     "testPathIgnorePatterns": [
       "<rootDir>/node_modules/",
       "<rootDir>/build/",
