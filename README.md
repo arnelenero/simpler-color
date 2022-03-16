@@ -5,14 +5,14 @@
 [![coverage](https://img.shields.io/coveralls/github/arnelenero/simpler-color)](https://coveralls.io/github/arnelenero/simpler-color)
 [![license](https://img.shields.io/github/license/arnelenero/simpler-color)](https://opensource.org/licenses/MIT)
 
-Create your own complete color system fast and easy!
+Create your own complete Web color system fast and easy!
 
 Color is at the heart of every UI design system. A cohesive **color system** enables your application to:
 
 - **consistently** express brand identity and style
 - **effectively** communicate intent and meaning
 
-Simpler Color makes it super easy to implement your own color system, no matter what platform, framework, or UI library you are using. It comes as a JavaScript/TypeScript library that works on both browser and Node.
+Simpler Color makes it super easy to implement your own CSS-compliant color system for any JavaScript/TypeScript project, no matter what platform, framework, or UI library you are using. It works in the browser, server (Node), mobile (React Native) and desktop (Electron).
 
 ## Easy as 1-2-3!
 
