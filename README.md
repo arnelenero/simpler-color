@@ -56,7 +56,7 @@ Creating your color system begins with building your _color palettes_. Each pale
 
 You decide what sort of relationship should be between colors in the palette. The most common type is the _tonal palette_ (also called _monochromatic_), which is made up of various "tones" of the same general hue. For example, various shades of blue is a tonal palette.
 
-<img src="docs/assets/palette.png" alt="shades of blue with varying lightness" width="800"/>
+<img src="./docs/assets/palette.png" alt="shades of blue with varying lightness" width="800"/>
 
 Each color in a palette is accessed by a unique _color key_, which is a string or number that indicates its relationship with the base color. The color values are determined by a _color mapping function_, which returns a specific color value for a given color key.
 
