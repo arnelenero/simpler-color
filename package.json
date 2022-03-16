@@ -30,7 +30,8 @@
     "prepare": "npm test",
     "pretest": "npm run build",
     "test": "jest",
-    "test:cov": "npm test -- --coverage"
+    "test:cov": "npm test -- --coverage && coveralls < coverage/lcov.info",
+    "test:cov-local": "npm test -- --coverage"
   },
   "dependencies": {
     "color": "^4.2.0"
@@ -45,6 +46,7 @@
     "@types/jest": "^27.4.1",
     "@types/node": "^17.0.21",
     "babel-jest": "^27.5.1",
+    "coveralls": "^3.1.1",
     "cross-env": "^5.2.0",
     "eslint": "^8.8.0",
     "jest": "^27.5.1",
