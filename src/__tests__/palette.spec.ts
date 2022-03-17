@@ -15,7 +15,7 @@ describe('palette', () => {
   it('uses `lightness` color mapping function by default', () => {
     const blues = palette('blue')
     const blue40 = blues(40)
-    expect(blue40).toBe('hsl(240, 100%, 40%)')
+    expect(blue40).toBe('#0000CC')
   })
 
   it('defaults the return value of getter to base color if no key is passed', () => {

@@ -1,9 +1,9 @@
 import lightness from '../lightness'
 
 describe('lightness', () => {
-  it('returns an HSL value with L equal to key %', () => {
+  it('returns a new hex color value with adjusted % lightness', () => {
     const color = lightness('blue', 40)
-    expect(color).toBe('hsl(240, 100%, 40%)')
+    expect(color).toBe('#0000CC')
   })
 
   it('returns the base color if key is not a number', () => {
@@ -13,12 +13,12 @@ describe('lightness', () => {
 
   it('sets the L value to 100% if key exceeds 100', () => {
     const color = lightness('blue', 150)
-    expect(color).toBe('hsl(240, 100%, 100%)')
+    expect(color).toBe('#FFFFFF')
   })
 
   it('sets the L value to 0% if key is negative', () => {
     const color = lightness('blue', -50)
-    expect(color).toBe('hsl(240, 100%, 0%)')
+    expect(color).toBe('#000000')
   })
 
   it('throws if base color is invalid', () => {

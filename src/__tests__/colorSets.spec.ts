@@ -17,9 +17,9 @@ describe('colorSets', () => {
 
   it('uses `lightness` color mapping function by default for all palettes', () => {
     const colors = colorSet(baseColors)
-    expect(colors.blues(40)).toBe('hsl(240, 100%, 40%)')
-    expect(colors.reds(40)).toBe('hsl(0, 100%, 40%)')
-    expect(colors.greens(40)).toBe('hsl(120, 100%, 40%)')
+    expect(colors.blues(40)).toBe('#0000CC')
+    expect(colors.reds(40)).toBe('#CC0000')
+    expect(colors.greens(40)).toBe('#00CC00')
   })
 
   it('can apply a custom color mapping function to all palettes', () => {
