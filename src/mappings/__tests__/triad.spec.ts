@@ -6,6 +6,11 @@ describe('triad', () => {
     expect(color).toBe('#FF0000')
   })
 
+  it('rotates the hue in the opposite direction if key is negative', () => {
+    const color = triad('blue', -1)
+    expect(color).toBe('#00FF00')
+  })
+
   it('returns the base color if key is not a number', () => {
     const color = triad('blue', 'foo')
     expect(color).toBe('blue')

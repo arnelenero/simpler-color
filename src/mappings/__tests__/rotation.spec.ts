@@ -6,6 +6,11 @@ describe('rotation', () => {
     expect(color).toBe('#FFFF00')
   })
 
+  it('rotates the hue in the opposite direction if key is negative', () => {
+    const color = rotation('blue', -90)
+    expect(color).toBe('#00FF80')
+  })
+
   it('returns the base color if key is not a number', () => {
     const color = rotation('blue', 'foo')
     expect(color).toBe('blue')
