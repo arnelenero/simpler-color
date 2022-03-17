@@ -44,7 +44,7 @@ const uiColors = colorScheme(baseColors, colors => ({
   text: colors.neutral(10),
 }))
 
-// You can now access your various UI colors as `uiColors.primaryButton` and so on.
+// Access various UI colors as `uiColors.primaryButton` and so on.
 ```
 
 If some of those terms sound alien to you, read on...

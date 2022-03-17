@@ -1,4 +1,4 @@
-import lightness from './lightness'
+import lightness from './mappings/lightness'
 
 import type { StringOrNumber } from './utils'
 
