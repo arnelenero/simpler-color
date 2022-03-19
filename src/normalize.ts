@@ -16,5 +16,5 @@ export default function normalize(color: string | Color): string {
   const colorObj = typeof color === 'string' ? Color(color) : color
   const hasAlpha = colorObj.alpha() < 1
 
-  return hasAlpha ? colorObj.rgb().toString() : colorObj.hex()
+  return hasAlpha ? colorObj.rgb().string() : colorObj.hex()
 }
