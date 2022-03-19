@@ -11,14 +11,19 @@ describe('opacity', () => {
     expect(color).toBe('blue')
   })
 
-  it('discards the A value, and returns RGB value instead, if key exceeds 1', () => {
+  it('discards the A value, and returns RGB value instead, if key equals or exceeds 1', () => {
     const color = opacity('blue', 40)
-    expect(color).toBe('rgb(0, 0, 255)')
+    expect(color).toBe('#0000FF')
   })
 
   it('sets the A value to 0 if key is negative', () => {
     const color = opacity('blue', -1)
     expect(color).toBe('rgba(0, 0, 255, 0)')
+  })
+
+  it('supports translucent base color', () => {
+    const color = opacity('rgba(0, 0, 255, 0.5)', 0.1)
+    expect(color).toBe('rgba(0, 0, 255, 0.1)')
   })
 
   it('throws if base color is invalid', () => {

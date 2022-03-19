@@ -1,5 +1,7 @@
 import Color from 'color'
 
+import normalize from '../normalize'
+
 import type { ColorMapping } from '../palette'
 
 /**
@@ -14,9 +16,11 @@ import type { ColorMapping } from '../palette'
 const lightness: ColorMapping = (baseColor, key) => {
   if (typeof key !== 'number') return baseColor
 
+  const base = Color(baseColor)
+
   const targetL = Math.min(Math.max(key, 0), 100)
 
-  return Color(baseColor).lightness(targetL).hex()
+  return normalize(base.lightness(targetL))
 }
 
 export default lightness

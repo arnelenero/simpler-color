@@ -21,6 +21,11 @@ describe('lightness', () => {
     expect(color).toBe('#000000')
   })
 
+  it('supports translucent base color', () => {
+    const color = lightness('rgba(0, 0, 255, 0.5)', 40)
+    expect(color).toBe('rgba(0, 0, 204, 0.5)')
+  })
+
   it('throws if base color is invalid', () => {
     expect(() => {
       return lightness('bluish', 10)
