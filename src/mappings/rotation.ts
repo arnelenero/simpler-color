@@ -6,7 +6,7 @@ import type { ColorMapping } from '../palette'
  * Rotates the hue of the base color by a specified angle
  * around the color wheel
  *
- * A negative key value reverses the direction of rotation.
+ * A negative `key` value reverses the direction of rotation.
  *
  * @param baseColor
  * @param key - rotation angle in degrees
