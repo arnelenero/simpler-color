@@ -5,9 +5,9 @@
 [![coverage](https://img.shields.io/coveralls/github/arnelenero/simpler-color)](https://coveralls.io/github/arnelenero/simpler-color)
 [![license](https://img.shields.io/github/license/arnelenero/simpler-color)](https://opensource.org/licenses/MIT)
 
-Create your own complete Web color system fast and easy!
+Create your own **complete Web color system** fast and easy, from **as little as one base color**!
 
-Color is at the heart of every UI design system. A cohesive **color system** enables your application to:
+Color is at the heart of every UI design system. A cohesive color system enables your application to:
 
 - **consistently** express brand identity and style
 - **effectively** communicate intent and meaning
@@ -38,7 +38,7 @@ const baseColors = {
 ```js
 import { harmony } from 'simpler-color'
 
-// Generate 5 harmonious base colors from your single color!
+// Generate 5 harmonious base colors from your main brand color!
 const baseColors = harmony('#609E3F')
 ```
 
