@@ -1,5 +1,7 @@
 import Color from 'color'
 
+import normalize from '../normalize'
+
 import type { ColorMapping } from '../palette'
 
 /**
@@ -14,9 +16,11 @@ import type { ColorMapping } from '../palette'
 const saturation: ColorMapping = (baseColor, key) => {
   if (typeof key !== 'number') return baseColor
 
+  const base = Color(baseColor)
+
   const targetS = Math.min(Math.max(key, 0), 100)
 
-  return Color(baseColor).saturationl(targetS).hex()
+  return normalize(base.saturationl(targetS))
 }
 
 export default saturation

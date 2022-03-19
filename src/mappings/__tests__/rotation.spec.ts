@@ -21,6 +21,11 @@ describe('rotation', () => {
     expect(color).toBe('blue')
   })
 
+  it('supports translucent base color', () => {
+    const color = rotation('rgba(0, 0, 255, 0.5)', 180)
+    expect(color).toBe('rgba(255, 255, 0, 0.5)')
+  })
+
   it('throws if base color is invalid', () => {
     expect(() => {
       return rotation('bluish', 10)

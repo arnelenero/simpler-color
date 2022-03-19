@@ -1,5 +1,7 @@
 import Color from 'color'
 
+import normalize from '../normalize'
+
 import type { ColorMapping } from '../palette'
 
 /**
@@ -20,7 +22,7 @@ const rotation: ColorMapping = (baseColor, key) => {
 
   const targetH = (base.hue() + key) % 360
 
-  return base.hue(targetH).hex()
+  return normalize(base.hue(targetH))
 }
 
 export default rotation

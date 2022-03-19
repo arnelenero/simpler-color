@@ -21,6 +21,11 @@ describe('saturation', () => {
     expect(color).toBe('#808080')
   })
 
+  it('supports translucent base color', () => {
+    const color = saturation('rgba(0, 0, 255, 0.5)', 40)
+    expect(color).toBe('rgba(77, 77, 179, 0.5)')
+  })
+
   it('throws if base color is invalid', () => {
     expect(() => {
       return saturation('bluish', 10)
