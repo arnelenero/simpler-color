@@ -22,7 +22,8 @@ export default function harmony(baseColor: string) {
   }
 }
 
-type HarmonyBaseColors = ReturnType<typeof harmony>
+/** Harmony generated base colors */
+export type HarmonyBaseColors = ReturnType<typeof harmony>
 
 type HarmonyColorClass = keyof HarmonyBaseColors
 

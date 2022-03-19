@@ -20,4 +20,4 @@ export type {
 } from './colorScheme'
 export type { BaseColors, ColorSet } from './colorSet'
 export type { ColorMapping, Palette } from './palette'
-export type { HarmonyColors } from './presets/harmony'
+export type { HarmonyBaseColors, HarmonyColors } from './presets/harmony'
