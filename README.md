@@ -96,6 +96,7 @@ Common additional palettes can be any of (but not limited to) these:
 - _secondary_: less prominent, usually more muted
 - _accent_: usually complementary (opposite) to primary, to provide contrast
 - _neutral_: typically shades of gray or similar neutral tones
+- _error_: normally a brilliant red hue, to indicate errors
 
 To ensure consistency of your color set, simpler-color enforces that you use the same set of color keys (and thus the same color mapping function) across all your palettes.
 
@@ -137,3 +138,92 @@ const uiColors = colorScheme(
   },
 )
 ```
+
+### Using the built-in color mapping functions
+
+Color mapping functions are not only used to generate entire palettes, but also to calculate individual colors based on another. The format is always `fn(baseColor, key)` where the valid `key` values vary depending on the function. They can also be nested to perform more complex calculations.
+
+```js
+import { analogue, complement, saturation } from 'simpler-color'
+
+const brandColor = '#336699'
+const baseColors = {
+  primary: brandColor,
+  secondary: analogue(brandColor, 2),
+  accent: saturation(complement(brandColor, 1), 80),
+}
+```
+
+#### Saturation
+
+<img src="./docs/assets/saturation.png" alt="saturation scale of green" height="50"/>
+
+```js
+saturation(baseColor, percentSaturation)
+```
+
+Generates a new color value by adjusting the base color's % saturation (the "S" value in HSL color).
+
+#### Lightness
+
+<img src="./docs/assets/palette.png" alt="lightness scale of green" height="50"/>
+
+```js
+lightness(baseColor, percentLightness)
+```
+
+Generates a new color value by adjusting the base color's % lightness (the "L" value in HSL color). This is the default color mapping used to generate tonal palettes.
+
+#### Rotation
+
+<img src="./docs/assets/rotation.png" alt="rotation scale of green" height="50"/>
+
+```js
+rotation(baseColor, rotationAngle)
+```
+
+Rotates the hue of the base color by a specified angle around the color wheel. A negative angle reverses the direction of rotation.
+
+#### Analogue
+
+<img src="./docs/assets/analogue.png" alt="analogue scale of green" height="50"/>
+
+```js
+analogue(baseColor, step)
+```
+
+Generates a color that is analogous to the base color. An _analogous_ color is one that is located adjacent to the base color around the color wheel, i.e. at around 30˚ angle. It is visually similar to the base.
+
+This mapping function rotates the hue in steps of 30˚. A negative step value rotates in the opposite direction.
+
+#### Complement
+
+<img src="./docs/assets/complement.png" alt="complementary scale of green" height="50"/>
+
+```js
+complement(baseColor, step)
+```
+
+Generates a color that is complementary to the base color. A _complementary_ color is one that is located at the opposite side of the color wheel, i.e. at 180˚ angle. This provides excellent color contrast.
+
+This mapping function cycles through multiple sets of "double complementary" hue rotation. The algorithm loops from 1 to `step`, rotates Hue by 180˚ on every odd iteration, and 30˚ on even. A negative step value rotates in the opposite direction.
+
+#### Triad
+
+<img src="./docs/assets/triad.png" alt="triad scale of green" height="50"/>
+
+```js
+triad(baseColor, step)
+```
+
+Generates a triadic complementary color to the base color. A _triadic_ palette consists of 3 colors that are equally spaced around the color wheel. Therefore, producing a triadic complementary color means rotating the hue by 120˚ angle. This provides a more subtle contrast.
+
+This mapping function is cyclic. A negative step value rotates in the opposite direction.
+
+#### Opacity
+
+```js
+opacity(baseColor, alpha)
+```
+
+Generates a new color value by adjusting the base color's opacity (the alpha or "A" value in RGBA) between 0 (transparent) and 1 (opaque).
