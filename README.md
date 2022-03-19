@@ -26,11 +26,23 @@ npm install simpler-color
 
 ```js
 const baseColors = {
-  primary: '#336669',
-  secondary: '#57614E',
+  primary: '#609E3F',
+  secondary: '#5D745D',
   neutral: '#5E5F5A',
+  ...etc,
 }
 ```
+
+**—OR—** just give simpler-color ONE base color, and it will generate the rest!
+
+```js
+import { harmony } from 'simpler-color'
+
+// Generate 5 harmonious base colors from your single color!
+const baseColors = harmony('#609E3F')
+```
+
+<img src="./docs/assets/harmony-palettes.png" alt="Harmony preset" />
 
 **Step 3:** Create your color scheme(s) by mapping UI roles to specific colors from your palettes
 
@@ -42,6 +54,7 @@ const uiColors = colorScheme(baseColors, colors => ({
   primaryButtonText: colors.primary(95),
   surface: colors.neutral(98),
   text: colors.neutral(10),
+  ...etc,
 }))
 
 // Access various UI colors as `uiColors.primaryButton` and so on.
@@ -59,13 +72,13 @@ We're not gonna discuss Color Theory here, but let's talk a bit about what a pro
 
 Creating your color system begins with building your _color palettes_. Each palette consists of a group of related colors, generated from one _base color_.
 
-You decide what sort of relationship should be between colors in the palette. The most common type is the _tonal palette_ (also called _monochromatic_), which is made up of various "tones" of the same general hue. For example, various shades of blue is a tonal palette.
+You decide what sort of relationship should be between colors in the palette. The most common type is the _tonal palette_ (also called _monochromatic_), which is made up of various "tones" of the same general hue. For example, various shades of green is a tonal palette.
 
-<img src="./docs/assets/palette.png" alt="shades of blue with varying lightness" width="800"/>
+<img src="./docs/assets/palette.png" alt="shades of green with varying lightness" width="800"/>
 
 Each color in a palette is accessed by a unique _color key_, which is a string or number that indicates its relationship with the base color. The color values are determined by a _color mapping function_, which returns a specific color value for a given color key.
 
-Palettes are automatically created by simpler-color based on your specified base colors. By default, it generates **tonal** palettes, with specific tones accessed by passing a numeric key between 0 and 100, which represents % _lightness_ (0 = black, 100 = white). Any value in between generates a specific shade of the base color. So, for example, if your `primary` palette is based on blue (like in the illustration above), `primary(40)` gives you blue with 40% lightness.
+Palettes are automatically created by simpler-color based on your specified base colors. By default, it generates **tonal** palettes, with specific tones accessed by passing a numeric key between 0 and 100, which represents % _lightness_ (0 = black, 100 = white). Any value in between generates a specific shade of the base color. So, for example, if your `primary` palette is based on green (like in the illustration above), `primary(40)` gives you green with 40% lightness.
 
 You can, of course, define your own color mapping function to override the default. This also means that you can define a completely different set of color keys, which can be any of these common alternatives:
 
@@ -106,19 +119,21 @@ The final step is to map each UI role to a specific color value from one of the 
 ### Defining a custom color mapping function
 
 ```js
+import { complement, saturation } from 'simpler-color'
+
 function awesomeColor(baseColor, key) {
-  const colorValue = /** insert logic here **/
-  return colorValue
+  return complement(saturation(baseColor, 80), key)
 }
 
 const uiColors = colorScheme(
-  baseColors,
+  'blue',
   colors => ({
-    primaryButton: colors.primary(40),
-    /** rest of the UI role mapping here **/
+    primaryButton: colors.primary(0),
+    floatingActionButton: colors.primary(2),
+    ...etc,
   }),
   {
-    colorMapping: awesomeColor
-  }
+    colorMapping: awesomeColor, // 👈
+  },
 )
 ```
