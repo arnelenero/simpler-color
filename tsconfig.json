@@ -16,8 +16,7 @@
     "importsNotUsedAsValues": "error",
     "outDir": "./build",
     "declarationDir": "./types",
-    "rootDir": "./src",
-    "baseUrl": "."
+    "rootDir": "./src"
   },
   "include": ["src"],
   "exclude": ["src/**/__tests__"]
