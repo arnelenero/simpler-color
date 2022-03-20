@@ -44,20 +44,24 @@ const baseColors = harmony('#609E3F')
 
 <img src="./docs/assets/harmony-palettes.png" alt="Harmony preset" />
 
-**Step 3:** Create your color scheme(s) by mapping UI roles to specific colors from your palettes
+**Step 3:** Create your color scheme(s) by mapping UI roles to specific colors from the auto-generated palettes
 
 ```js
 import { colorScheme } from 'simpler-color'
 
-const uiColors = colorScheme(baseColors, colors => ({
-  primaryButton: colors.primary(40),
-  primaryButtonText: colors.primary(95),
-  surface: colors.neutral(98),
-  text: colors.neutral(10),
-  ...etc,
-}))
-
-// Access various UI colors as `uiColors.primaryButton` and so on.
+const scheme = colorScheme(
+  baseColors, // 👈 From these base colors...
+  // 👇 ...your color palettes are auto-generated
+  colors => ({
+    // 👇 which you then map to UI roles.
+    primaryButton: colors.primary(40),
+    primaryButtonText: colors.primary(95),
+    surface: colors.neutral(98),
+    text: colors.neutral(10),
+    ...etc,
+  }),
+)
+// Access various UI colors as `scheme.primaryButton` and so on.
 ```
 
 If some of those terms sound alien to you, read on...
