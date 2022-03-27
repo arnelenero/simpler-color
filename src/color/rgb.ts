@@ -1,5 +1,6 @@
 import named from './named'
 import { matchHexString } from './parsers/hexString'
+import { matchRgbString } from './parsers/rgbString'
 
 export interface RGB {
   r: number
@@ -25,6 +26,25 @@ export function rgbFromHexString(colorString: string): RGB | null {
   return { r: rgbValues[0], g: rgbValues[1], b: rgbValues[2], a: alpha }
 }
 
+export function rgbFromRgbString(colorString: string): RGB | null {
+  const match = matchRgbString(colorString)
+  if (!match) return null
+
+  const rgbValues = match.map((val, index) => {
+    let num = parseFloat(val)
+    if (val.indexOf('%') > -1) {
+      num *= 0.01
+      // Except for alpha, value should equal % of 255
+      if (index < 3) num *= 255
+    }
+    return num
+  })
+
+  const alpha = rgbValues[3] ?? 1
+
+  return { r: rgbValues[0], g: rgbValues[1], b: rgbValues[2], a: alpha }
+}
+
 export default function rgb(colorString: string): RGB | null {
   colorString = colorString.trim()
 
@@ -35,5 +55,5 @@ export default function rgb(colorString: string): RGB | null {
   const hexFromName = named(colorString)
   if (hexFromName) colorString = hexFromName
 
-  return rgbFromHexString(colorString)
+  return rgbFromHexString(colorString) ?? rgbFromRgbString(colorString)
 }
