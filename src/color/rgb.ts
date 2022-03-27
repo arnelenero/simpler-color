@@ -54,7 +54,7 @@ function rgbFromRgbString(colorString: string): RGB | null {
  * Creates an RGB model from a given color string
  *
  * @param colorString - CSS color string
- * @returns an `{r,g,b[,a]}` color object (or `null` if invalid color string)
+ * @returns an `{r,g,b,a}` color object (or `null` if invalid color string)
  */
 export default function rgb(colorString: string): RGB | null {
   colorString = colorString.trim()
