@@ -10,13 +10,15 @@ export interface RGB {
   a: number
 }
 
-export function rgbFromHexString(colorString: string): RGB | null {
+function rgbFromHexString(colorString: string): RGB | null {
   const match = matchHexString(colorString)
   if (!match) return null
 
   const rgbValues = match.map(val => {
     // Expand if value is shorthand (single digit) hex
-    if (val.length === 1) val = `${val}${val}`
+    if (val.length === 1) {
+      val = `${val}${val}`
+    }
     // Convert hex to decimal
     return parseInt(val, 16)
   })
@@ -27,7 +29,7 @@ export function rgbFromHexString(colorString: string): RGB | null {
   return { r: rgbValues[0], g: rgbValues[1], b: rgbValues[2], a: alpha }
 }
 
-export function rgbFromRgbString(colorString: string): RGB | null {
+function rgbFromRgbString(colorString: string): RGB | null {
   const match = matchRgbString(colorString)
   if (!match) return null
 
@@ -36,7 +38,9 @@ export function rgbFromRgbString(colorString: string): RGB | null {
     if (val.indexOf('%') > -1) {
       num *= 0.01
       // Except for alpha, value should equal % of 255
-      if (index < 3) num *= 255
+      if (index < 3) {
+        num *= 255
+      }
     }
     return index < 3 ? clamp(num, 0, 255) : clamp(num, 0, 1)
   })
@@ -46,6 +50,12 @@ export function rgbFromRgbString(colorString: string): RGB | null {
   return { r: rgbValues[0], g: rgbValues[1], b: rgbValues[2], a: alpha }
 }
 
+/**
+ * Creates an RGB model from a given color string
+ *
+ * @param colorString - CSS color string
+ * @returns an `{r,g,b[,a]}` color object (or `null` if invalid color string)
+ */
 export default function rgb(colorString: string): RGB | null {
   colorString = colorString.trim()
 
@@ -54,7 +64,9 @@ export default function rgb(colorString: string): RGB | null {
 
   // Get hex value if string is a color name
   const hexFromName = named(colorString)
-  if (hexFromName) colorString = hexFromName
+  if (hexFromName) {
+    colorString = hexFromName
+  }
 
   return rgbFromHexString(colorString) ?? rgbFromRgbString(colorString)
 }

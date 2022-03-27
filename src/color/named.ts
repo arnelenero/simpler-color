@@ -154,8 +154,8 @@ export const namedColors: Record<string, HexString> = {
 /**
  * Looks up the hex value of a given color name
  *
- * @param colorName
- * @returns color hex string (or undefined if invalid color name)
+ * @param colorName - CSS color name
+ * @returns color hex string (or `undefined` if invalid color name)
  */
 export default function named(colorName: string): HexString | undefined {
   return namedColors[colorName.toLowerCase()]
