@@ -1,3 +1,4 @@
+import { clamp } from '../utils'
 import named from './named'
 import { matchHexString } from './parsers/hexString'
 import { matchRgbString } from './parsers/rgbString'
@@ -37,7 +38,7 @@ export function rgbFromRgbString(colorString: string): RGB | null {
       // Except for alpha, value should equal % of 255
       if (index < 3) num *= 255
     }
-    return num
+    return index < 3 ? clamp(num, 0, 255) : clamp(num, 0, 1)
   })
 
   const alpha = rgbValues[3] ?? 1

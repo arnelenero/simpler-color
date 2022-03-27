@@ -23,6 +23,11 @@ describe('rgb', () => {
     expect(rgb('#FAC3')).toEqual({ r: 255, g: 170, b: 204, a: 0.2 })
   })
 
+  it('clamps the RGB values to [0..255] and alpha to [0..1]', () => {
+    expect(rgb('rgb(0, -1, 256, 80)')).toEqual({ r: 0, g: 0, b: 255, a: 1 })
+    expect(rgb('rgb(255.01, 0, 8, -1)')).toEqual({ r: 255, g: 0, b: 8, a: 0 })
+  })
+
   it('returns RGB values from CSS color names/keywords', () => {
     expect(rgb('blue')).toEqual({ r: 0, g: 0, b: 255, a: 1 })
     expect(rgb('yellow')).toEqual({ r: 255, g: 255, b: 0, a: 1 })
