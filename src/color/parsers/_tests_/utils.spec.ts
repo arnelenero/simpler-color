@@ -2,11 +2,12 @@ import {
   alphaSeparatorMatcher,
   cssNumberMatcher,
   exact,
+  extractValuesFromMatch,
   separatorMatcher,
 } from '../utils'
 
 describe('exact', () => {
-  it('creates a new regex that is restricted to exact matches only', () => {
+  it('returns a new regex that is restricted to exact matches only', () => {
     const regex = /[0-9]+/
     const exactRegex = exact(regex)
     expect(regex.test(' 123 ')).toBe(true)
@@ -17,6 +18,18 @@ describe('exact', () => {
   it('retains the original flags (if any)', () => {
     const regex = /[a-z]+/i
     expect(exact(regex).test('Abc')).toBe(true)
+  })
+})
+
+describe('extractValuesFromMatch', () => {
+  it('returns an array containing only the color components', () => {
+    const match = ['#ffaaddee', 'ff', 'aa', 'dd', 'ee'] as RegExpExecArray
+    expect(extractValuesFromMatch(match)).toEqual(['ff', 'aa', 'dd', 'ee'])
+  })
+
+  it('removes undefined items', () => {
+    const match = ['#ffaadd', 'ff', 'aa', 'dd', undefined] as RegExpExecArray
+    expect(extractValuesFromMatch(match)).toEqual(['ff', 'aa', 'dd'])
   })
 })
 

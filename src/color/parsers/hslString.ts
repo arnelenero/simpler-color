@@ -2,6 +2,7 @@ import {
   alphaSeparatorMatcher,
   cssNumberMatcher,
   exact,
+  extractValuesFromMatch,
   separatorMatcher,
 } from './utils'
 
@@ -45,5 +46,5 @@ export function isHslString(colorString: string): colorString is HslString {
  */
 export function matchHslString(colorString: string): string[] | null {
   const match = exact(hslMatcher).exec(colorString)
-  return match?.slice(1) ?? null
+  return match ? extractValuesFromMatch(match) : null
 }

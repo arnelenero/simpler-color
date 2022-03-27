@@ -2,6 +2,7 @@ import {
   alphaSeparatorMatcher,
   cssNumberMatcher,
   exact,
+  extractValuesFromMatch,
   separatorMatcher,
 } from './utils'
 
@@ -43,5 +44,5 @@ export function isRgbString(colorString: string): colorString is RgbString {
  */
 export function matchRgbString(colorString: string): string[] | null {
   const match = exact(rgbMatcher).exec(colorString)
-  return match?.slice(1) ?? null
+  return match ? extractValuesFromMatch(match) : null
 }

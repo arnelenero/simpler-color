@@ -1,4 +1,6 @@
-export const named = {
+import type { HexString } from './parsers/hexString'
+
+export const namedColors: Record<string, HexString> = {
   aliceblue: '#F0F8FF',
   antiquewhite: '#FAEBD7',
   aqua: '#00FFFF',
@@ -147,10 +149,14 @@ export const named = {
   whitesmoke: '#F5F5F5',
   yellow: '#FFFF00',
   yellowgreen: '#9ACD32',
-} as const
+}
 
-export type ColorName = keyof typeof named
-
-export function isColorName(color: string): color is ColorName {
-  return color.toLowerCase() in named
+/**
+ * Looks up the hex value of a given color name
+ *
+ * @param colorName
+ * @returns color hex string (or undefined if invalid color name)
+ */
+export default function named(colorName: string): HexString | undefined {
+  return namedColors[colorName.toLowerCase()]
 }

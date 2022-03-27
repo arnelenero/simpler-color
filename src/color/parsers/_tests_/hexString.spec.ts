@@ -37,9 +37,9 @@ describe('matchHexString', () => {
     expect(matchHexString(str)).toEqual(['FF', 'AA', 'CC', 'EE'])
   })
 
-  it('returns alpha value as undefined if not specified in string', () => {
+  it('returns only a 3-item array if color has no alpha value', () => {
     const str = '#ffaabb'
-    expect(matchHexString(str)).toEqual(['ff', 'aa', 'bb', undefined])
+    expect(matchHexString(str)).toEqual(['ff', 'aa', 'bb'])
   })
 
   it('captures shorthand RGB and alpha hex values', () => {
