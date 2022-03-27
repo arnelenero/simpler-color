@@ -1,11 +1,11 @@
 import named from './named'
-import { isHexString, matchHexString } from './parsers/hexString'
+import { matchHexString } from './parsers/hexString'
 
 export interface RGB {
   r: number
   g: number
   b: number
-  a?: number
+  a: number
 }
 
 export function rgbFromHexString(colorString: string): RGB | null {
@@ -26,6 +26,11 @@ export function rgbFromHexString(colorString: string): RGB | null {
 }
 
 export default function rgb(colorString: string): RGB | null {
+  colorString = colorString.trim()
+
+  if (colorString.toLowerCase() === 'transparent')
+    return { r: 0, g: 0, b: 0, a: 0 }
+
   // Get hex value if string is a color name
   const hexFromName = named(colorString)
   if (hexFromName) colorString = hexFromName
