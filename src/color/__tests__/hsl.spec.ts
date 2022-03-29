@@ -56,11 +56,22 @@ describe('hsl', () => {
     expect(hsl('hsla(240, 50%, 50%, 10)')).toHaveProperty('a', 1)
   })
 
-  values = ['#FF33CC99', 'rgba(255, 51, 204, 0.6)', 'rgb(100% 20% 80% / 60%)']
+  values = [
+    '#FF33CC',
+    '#FF33CCFF',
+    'rgb(255, 51, 204)',
+    'rgba(255, 51, 204, 1.0)',
+    'rgb(100% 20% 80% / 100%)',
+  ]
   values.forEach(color => {
     it(`converts values from RGB string: ${color}`, () => {
-      expect(hsl(color)).toEqual({ h: 315, s: 100, l: 60, a: 0.6 })
+      expect(hsl(color)).toEqual({ h: 315, s: 100, l: 60, a: 1 })
     })
+  })
+
+  it('converts CSS color names/keywords into HSL', () => {
+    expect(hsl('blue')).toEqual({ h: 240, s: 100, l: 50, a: 1 })
+    expect(hsl('transparent')).toEqual({ h: NaN, s: 0, l: 0, a: 0 })
   })
 
   it('returns null if not a valid color string', () => {

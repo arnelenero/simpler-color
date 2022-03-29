@@ -7,6 +7,7 @@ describe('rgbToHsl', () => {
     blue: { r: 0, g: 0, b: 255, a: 1 },
     white: { r: 255, g: 255, b: 255, a: 1 },
     black: { r: 0, g: 0, b: 0, a: 1 },
+    gray: { r: 128, g: 128, b: 128, a: 1 },
     palegreen: { r: 152, g: 251, b: 152, a: 1 },
   }
 
@@ -14,8 +15,15 @@ describe('rgbToHsl', () => {
     expect(rgbToHsl(rgb.red)).toEqual({ h: 0, s: 100, l: 50, a: 1 })
     expect(rgbToHsl(rgb.green)).toEqual({ h: 120, s: 100, l: 50, a: 1 })
     expect(rgbToHsl(rgb.blue)).toEqual({ h: 240, s: 100, l: 50, a: 1 })
-    expect(rgbToHsl(rgb.white)).toEqual({ h: 0, s: 0, l: 100, a: 1 })
-    expect(rgbToHsl(rgb.black)).toEqual({ h: 0, s: 0, l: 0, a: 1 })
+  })
+
+  it('assigns a hue value of NaN (to mean "powerless") in grayscale', () => {
+    expect(rgbToHsl(rgb.white).h).toBeNaN()
+    expect(rgbToHsl(rgb.black).h).toBeNaN()
+    expect(rgbToHsl(rgb.gray).h).toBeNaN()
+  })
+
+  it('does NOT round off saturation and lightness into integer', () => {
     const paleGreen = rgbToHsl(rgb.palegreen)
     expect(paleGreen.h).toBe(120)
     expect(paleGreen.s).toBeCloseTo(92.52)

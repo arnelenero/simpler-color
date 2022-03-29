@@ -20,7 +20,7 @@ export default function rgbToHsl(rgb: RGB): HSL {
   const d = max - min
   const light = (min + max) / 2
 
-  let hue = 0 // in official algo, default ("powerless") hue is NaN
+  let hue = NaN // "powerless" h-value is represented here as NaN
   let sat = 0
 
   if (d !== 0) {

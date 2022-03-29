@@ -59,9 +59,12 @@ describe('rgb', () => {
     expect(rgb('rgb(255, 255, 0, 10)')).toHaveProperty('a', 1)
   })
 
-  it('returns RGB values from CSS color names/keywords', () => {
+  it('returns RGB values from CSS color names', () => {
     expect(rgb('blue')).toEqual({ r: 0, g: 0, b: 255, a: 1 })
     expect(rgb('yellow')).toEqual({ r: 255, g: 255, b: 0, a: 1 })
+  })
+
+  it('treats the `transparent` keyword as black with zero opacity', () => {
     expect(rgb('transparent')).toEqual({ r: 0, g: 0, b: 0, a: 0 })
   })
 
