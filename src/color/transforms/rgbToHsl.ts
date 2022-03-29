@@ -1,3 +1,4 @@
+import { clamp } from '../../utils'
 import type { HSL } from '../hsl'
 import type { RGB } from '../rgb'
 
@@ -8,40 +9,38 @@ import type { RGB } from '../rgb'
  * @returns the equivalent HSL color object
  */
 export default function rgbToHsl(rgb: RGB): HSL {
-  const r = rgb.r / 255
-  const g = rgb.g / 255
-  const b = rgb.b / 255
-  const min = Math.min(r, g, b)
-  const max = Math.max(r, g, b)
-  const delta = max - min
-  let h = 0
-  let s
+  // Normalize r,g,b values to range [0..1]
+  const red = clamp(rgb.r / 255, 0, 1)
+  const green = clamp(rgb.g / 255, 0, 1)
+  const blue = clamp(rgb.b / 255, 0, 1)
 
-  if (max === min) {
-    h = 0
-  } else if (r === max) {
-    h = (g - b) / delta
-  } else if (g === max) {
-    h = 2 + (b - r) / delta
-  } else if (b === max) {
-    h = 4 + (r - g) / delta
+  // Apply official algorithm from https://drafts.csswg.org/css-color/#the-hsl-notation
+  const max = Math.max(red, green, blue)
+  const min = Math.min(red, green, blue)
+  const d = max - min
+  const light = (min + max) / 2
+
+  let hue = 0 // in official algo, default ("powerless") hue is NaN
+  let sat = 0
+
+  if (d !== 0) {
+    // Improbable scenario from official algo removed:
+    // (light === 0 || light === 1) is never true when d !== 0
+    // and r,g,b values are properly clamped
+    sat = (max - light) / Math.min(light, 1 - light)
+
+    switch (max) {
+      case red:
+        hue = (green - blue) / d + (green < blue ? 6 : 0)
+        break
+      case green:
+        hue = (blue - red) / d + 2
+        break
+      case blue:
+        hue = (red - green) / d + 4
+    }
+    hue *= 60
   }
 
-  h = Math.min(h * 60, 360)
-
-  if (h < 0) {
-    h += 360
-  }
-
-  const l = (min + max) / 2
-
-  if (max === min) {
-    s = 0
-  } else if (l <= 0.5) {
-    s = delta / (max + min)
-  } else {
-    s = delta / (2 - max - min)
-  }
-
-  return { h, s: s * 100, l: l * 100, a: rgb.a }
+  return { h: hue, s: sat * 100, l: light * 100, a: rgb.a }
 }

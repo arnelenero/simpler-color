@@ -10,7 +10,7 @@ describe('rgbToHsl', () => {
     palegreen: { r: 152, g: 251, b: 152, a: 1 },
   }
 
-  it('converts {r,g,b} values to {h,s,l}', () => {
+  it('converts {r,g,b} object to {h,s,l}', () => {
     expect(rgbToHsl(rgb.red)).toEqual({ h: 0, s: 100, l: 50, a: 1 })
     expect(rgbToHsl(rgb.green)).toEqual({ h: 120, s: 100, l: 50, a: 1 })
     expect(rgbToHsl(rgb.blue)).toEqual({ h: 240, s: 100, l: 50, a: 1 })
@@ -24,5 +24,10 @@ describe('rgbToHsl', () => {
 
   it('carries over any alpha value', () => {
     expect(rgbToHsl({ r: 255, g: 0, b: 128, a: 0.8 })).toHaveProperty('a', 0.8)
+  })
+
+  it('clamps r,g,b values to [0..255]', () => {
+    const hsl = rgbToHsl({ r: 256, g: -1, b: -0.5, a: 1 })
+    expect(hsl).toEqual({ h: 0, s: 100, l: 50, a: 1 })
   })
 })
