@@ -1,6 +1,8 @@
 import { clamp } from '../utils'
 import angle from './angle'
 import { matchHslString } from './parsers/hslString'
+import rgb from './rgb'
+import rgbToHsl from './transforms/rgbToHsl'
 
 export interface HSL {
   h: number
@@ -29,6 +31,11 @@ function hslFromHslString(colorString: string): HSL | null {
   }
 }
 
+function hslFromRgbString(colorString: string): HSL | null {
+  const rgbColor = rgb(colorString)
+  return rgbColor ? rgbToHsl(rgbColor) : null
+}
+
 /**
  * Creates an HSL model from a given color string
  *
@@ -38,5 +45,5 @@ function hslFromHslString(colorString: string): HSL | null {
 export default function hsl(colorString: string): HSL | null {
   colorString = colorString.trim()
 
-  return hslFromHslString(colorString)
+  return hslFromHslString(colorString) || hslFromRgbString(colorString)
 }

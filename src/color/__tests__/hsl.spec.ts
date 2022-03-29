@@ -56,6 +56,13 @@ describe('hsl', () => {
     expect(hsl('hsla(240, 50%, 50%, 10)')).toHaveProperty('a', 1)
   })
 
+  values = ['#FF33CC99', 'rgba(255, 51, 204, 0.6)', 'rgb(100% 20% 80% / 60%)']
+  values.forEach(color => {
+    it(`converts values from RGB string: ${color}`, () => {
+      expect(hsl(color)).toEqual({ h: 315, s: 100, l: 60, a: 0.6 })
+    })
+  })
+
   it('returns null if not a valid color string', () => {
     expect(hsl('foo')).toBeNull()
   })
