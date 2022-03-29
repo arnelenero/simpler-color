@@ -1,5 +1,6 @@
 import { exact, extractValuesFromMatch } from './utils'
 
+/** Color string in `#rrggbb(aa)` or `#rgb(a)` hex format */
 export type HexString = `#${string}`
 
 const hex = /[0-9a-fA-F]/.source

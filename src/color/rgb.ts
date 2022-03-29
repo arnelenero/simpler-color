@@ -3,6 +3,7 @@ import named from './named'
 import { matchHexString } from './parsers/hexString'
 import { matchRgbString } from './parsers/rgbString'
 
+/** Object model of a color in the RGB space */
 export interface RGB {
   r: number
   g: number

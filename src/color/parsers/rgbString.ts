@@ -6,6 +6,7 @@ import {
   separatorMatcher,
 } from './utils'
 
+/** Color string in `rgb()` or `rgba()` format */
 export type RgbString = `rgb(${string})` | `rgba(${string})`
 
 const num = cssNumberMatcher.source

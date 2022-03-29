@@ -21,4 +21,8 @@ describe('angle', () => {
     expect(angle('-90deg')).toBe(270)
     expect(angle('360deg')).toBe(0)
   })
+
+  it('returns NaN if argument is not a valid numeric value', () => {
+    expect(angle('invalid')).toBeNaN()
+  })
 })

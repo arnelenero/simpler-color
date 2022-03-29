@@ -1,5 +1,6 @@
 import type { HexString } from './parsers/hexString'
 
+/** CSS color names and corresponding hex string values */
 export const namedColors: Record<string, HexString> = {
   aliceblue: '#F0F8FF',
   antiquewhite: '#FAEBD7',

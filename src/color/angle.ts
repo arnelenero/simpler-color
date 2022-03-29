@@ -1,5 +1,3 @@
-export type AngleUnit = 'deg' | 'rad' | 'grad' | 'turn'
-
 function toDegrees(angle: number, unit: string): number {
   const multiplier: Record<string, number> = {
     rad: 180 / Math.PI,
@@ -22,7 +20,7 @@ function normalize(degrees: number): number {
  * Unit conversion is done as necessary.
  *
  * @param str - CSS angle string
- * @returns numeric value normalized to range [0..360)
+ * @returns numeric value normalized to range [0..360), or `NaN`
  */
 export default function angle(str: string): number {
   const num = parseFloat(str)

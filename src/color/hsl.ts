@@ -4,6 +4,7 @@ import { matchHslString } from './parsers/hslString'
 import rgb from './rgb'
 import rgbToHsl from './transforms/rgbToHsl'
 
+/** Object model of a color in the HSL space */
 export interface HSL {
   h: number
   s: number

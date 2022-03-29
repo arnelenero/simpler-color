@@ -6,6 +6,7 @@ import {
   separatorMatcher,
 } from './utils'
 
+/** Color string in `hsl()` or `hsla()` format */
 export type HslString = `hsl(${string})` | `hsla(${string})`
 
 const num = cssNumberMatcher.source
