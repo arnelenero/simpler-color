@@ -1,3 +1,10 @@
+/**
+ * Converts an angle value to degrees
+ *
+ * @param angle - numeric angle value
+ * @param unit - angle unit to convert from
+ * @returns converted angle value in degrees
+ */
 function toDegrees(angle: number, unit: string): number {
   const multiplier: Record<string, number> = {
     rad: 180 / Math.PI,
@@ -7,7 +14,13 @@ function toDegrees(angle: number, unit: string): number {
   return angle * (multiplier[unit.toLowerCase()] ?? 1)
 }
 
-function normalize(degrees: number): number {
+/**
+ * Normalizes angle value (in degrees) to range [0..360)
+ *
+ * @param degrees - numeric angle value
+ * @returns normalized angle value
+ */
+export function normalizeAngle(degrees: number): number {
   return ((degrees % 360) + 360) % 360
 }
 
@@ -25,5 +38,5 @@ function normalize(degrees: number): number {
 export default function angle(str: string): number {
   const num = parseFloat(str)
   const unit = str.match(/deg|rad|grad|turn/i)?.[0] ?? 'deg'
-  return normalize(toDegrees(num, unit))
+  return normalizeAngle(toDegrees(num, unit))
 }
