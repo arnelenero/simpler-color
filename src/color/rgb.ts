@@ -1,7 +1,9 @@
 import { clamp } from '../utils'
+import hsl from './hsl'
 import named from './named'
 import { matchHexString } from './parsers/hexString'
 import { matchRgbString } from './parsers/rgbString'
+import hslToRgb from './transforms/hslToRgb'
 
 /** Object model of a color in the RGB space */
 export interface RGB {
@@ -51,13 +53,19 @@ function rgbFromRgbString(colorString: string): RGB | null {
   return { r: rgbValues[0], g: rgbValues[1], b: rgbValues[2], a: alpha }
 }
 
+function rgbFromHslString(colorString: string): RGB | null {
+  const hslColor = hsl(colorString)
+  return hslColor ? hslToRgb(hslColor) : null
+}
+
 /**
  * Creates an RGB model from a given color string
  *
  * @param colorString - CSS color string
+ * @param only - when `true`, does not convert non-RGB color
  * @returns an `{r,g,b,a}` color object (or `null` if invalid color string)
  */
-export default function rgb(colorString: string): RGB | null {
+export default function rgb(colorString: string, only?: boolean): RGB | null {
   colorString = colorString.trim()
 
   if (colorString.toLowerCase() === 'transparent')
@@ -69,5 +77,9 @@ export default function rgb(colorString: string): RGB | null {
     colorString = hexFromName
   }
 
-  return rgbFromHexString(colorString) ?? rgbFromRgbString(colorString)
+  return (
+    rgbFromHexString(colorString) ??
+    rgbFromRgbString(colorString) ??
+    ((!only && rgbFromHslString(colorString)) || null)
+  )
 }

@@ -33,7 +33,7 @@ function hslFromHslString(colorString: string): HSL | null {
 }
 
 function hslFromRgbString(colorString: string): HSL | null {
-  const rgbColor = rgb(colorString)
+  const rgbColor = rgb(colorString, true)
   return rgbColor ? rgbToHsl(rgbColor) : null
 }
 
@@ -41,10 +41,14 @@ function hslFromRgbString(colorString: string): HSL | null {
  * Creates an HSL model from a given color string
  *
  * @param colorString - CSS color string
+ * @param only - when `true`, does not convert non-RGB color
  * @returns an `{h,s,l,a}` color object (or `null` if invalid color string)
  */
-export default function hsl(colorString: string): HSL | null {
+export default function hsl(colorString: string, only?: boolean): HSL | null {
   colorString = colorString.trim()
 
-  return hslFromHslString(colorString) || hslFromRgbString(colorString)
+  return (
+    hslFromHslString(colorString) ??
+    ((!only && hslFromRgbString(colorString)) || null)
+  )
 }

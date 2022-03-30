@@ -68,6 +68,25 @@ describe('rgb', () => {
     expect(rgb('transparent')).toEqual({ r: 0, g: 0, b: 0, a: 0 })
   })
 
+  values = [
+    'hsl(315, 100%, 60%)',
+    'hsla(315, 100%, 60%, 1.0)',
+    'hsl(315deg 100% 60% / 100%)',
+  ]
+  values.forEach(color => {
+    it(`converts values from HSL string: ${color}`, () => {
+      const obj = rgb(color)
+      expect(obj?.r).toBe(255)
+      expect(obj?.g).toBeCloseTo(51)
+      expect(obj?.b).toBeCloseTo(204)
+      expect(obj?.a).toBe(1)
+    })
+  })
+
+  it('does not recognize non-RGB string if `only` flag is true', () => {
+    expect(rgb('hsl(315, 100%, 60%)', true)).toBeNull()
+  })
+
   it('returns null if not a valid color string', () => {
     expect(rgb('foo')).toBeNull()
   })
