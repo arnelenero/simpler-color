@@ -1,4 +1,44 @@
-import rgb from '../rgb'
+import rgb, { isRgb, normalizeRgb } from '../rgb'
+
+describe('isRgb', () => {
+  it('returns true if value is a valid RGB object', () => {
+    expect(isRgb({ r: 255, g: 0, b: 64, a: 1 })).toBe(true)
+  })
+
+  const invalid = [
+    { r: 255, g: 0, b: 64 },
+    { r: '255', g: '0', b: '64', a: '1' },
+    { h: 240, s: 100, l: 50, a: 1 },
+    [255, 0, 64, 1],
+    'rgba(255, 0, 64, 1)',
+    '#FF0033',
+    'blue',
+  ]
+  invalid.forEach(val => {
+    it(`returns false if value is not a valid RGB object: ${val}`, () => {
+      expect(isRgb(val)).toBe(false)
+    })
+  })
+})
+
+describe('normalizeRgb', () => {
+  it('returns a new RGB object and does not mutate the original', () => {
+    const obj = { r: 255, g: 0, b: 64, a: 1 }
+    expect(normalizeRgb(obj)).not.toBe(obj)
+  })
+
+  it('clamps r,g,b values to [0..255] and alpha to [0..1]', () => {
+    const belowMin = { r: -1, g: -1, b: -1, a: -1 }
+    const aboveMax = { r: 256, g: 256, b: 256, a: 10 }
+    expect(normalizeRgb(belowMin)).toEqual({ r: 0, g: 0, b: 0, a: 0 })
+    expect(normalizeRgb(aboveMax)).toEqual({ r: 255, g: 255, b: 255, a: 1 })
+  })
+
+  it('does not round off r,g,b values that are within range', () => {
+    const nonInteger = { r: 254.9, g: 0.01, b: 33.333, a: 0.9 }
+    expect(normalizeRgb(nonInteger)).toEqual(nonInteger)
+  })
+})
 
 describe('rgb', () => {
   let values: string[]

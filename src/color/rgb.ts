@@ -13,6 +13,37 @@ export interface RGB {
   a: number
 }
 
+/**
+ * Checks if the given value is an RGB object
+ *
+ * @param color - value to inspect
+ * @returns true/false (type predicate for `RGB` in TS)
+ */
+export function isRgb(color: any): color is RGB {
+  return (
+    typeof color.r === 'number' &&
+    typeof color.g === 'number' &&
+    typeof color.b === 'number' &&
+    typeof color.a === 'number'
+  )
+}
+
+/**
+ * Normalizes the color component values of an RGB object
+ * to range [0..255] for r,g,b and [0..1] for alpha
+ *
+ * @param rgb - RGB object
+ * @returns a new RGB object with the normalized values
+ */
+export function normalizeRgb(rgb: RGB): RGB {
+  return {
+    r: clamp(rgb.r, 0, 255),
+    g: clamp(rgb.g, 0, 255),
+    b: clamp(rgb.b, 0, 255),
+    a: clamp(rgb.a, 0, 1),
+  }
+}
+
 function rgbFromHexString(colorString: string): RGB | null {
   const match = matchHexString(colorString)
   if (!match) return null
@@ -45,16 +76,19 @@ function rgbFromRgbString(colorString: string): RGB | null {
         num *= 255
       }
     }
-    return index < 3 ? clamp(num, 0, 255) : clamp(num, 0, 1)
+    return num
   })
 
-  const alpha = rgbValues[3] ?? 1
-
-  return { r: rgbValues[0], g: rgbValues[1], b: rgbValues[2], a: alpha }
+  return normalizeRgb({
+    r: rgbValues[0],
+    g: rgbValues[1],
+    b: rgbValues[2],
+    a: rgbValues[3] ?? 1,
+  })
 }
 
 function rgbFromHslString(colorString: string): RGB | null {
-  const hslColor = hsl(colorString)
+  const hslColor = hsl(colorString, true)
   return hslColor ? hslToRgb(hslColor) : null
 }
 

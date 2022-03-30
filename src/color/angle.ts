@@ -5,7 +5,7 @@
  * @param unit - angle unit to convert from
  * @returns converted angle value in degrees
  */
-function toDegrees(angle: number, unit: string): number {
+export function toDegrees(angle: number, unit: string): number {
   const multiplier: Record<string, number> = {
     rad: 180 / Math.PI,
     grad: 0.9,

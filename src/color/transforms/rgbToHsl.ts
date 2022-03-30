@@ -1,21 +1,24 @@
 import { clamp } from '../../utils'
 
 import type { HSL } from '../hsl'
-import type { RGB } from '../rgb'
+import { normalizeRgb, RGB } from '../rgb'
 
 /**
  * Converts from RGB to HSL color model
+ *
+ * This implementation is based on official algorithm:
+ * https://drafts.csswg.org/css-color/#the-hsl-notation
  *
  * @param rgb - RGB color object
  * @returns the equivalent HSL color object
  */
 export default function rgbToHsl(rgb: RGB): HSL {
-  // Normalize r,g,b values to range [0..1]
-  const red = clamp(rgb.r / 255, 0, 1)
-  const green = clamp(rgb.g / 255, 0, 1)
-  const blue = clamp(rgb.b / 255, 0, 1)
+  const { r, g, b, a } = normalizeRgb(rgb)
 
-  // Apply official algorithm from https://drafts.csswg.org/css-color/#the-hsl-notation
+  const red = r / 255
+  const green = g / 255
+  const blue = b / 255
+
   const max = Math.max(red, green, blue)
   const min = Math.min(red, green, blue)
   const d = max - min
@@ -43,5 +46,5 @@ export default function rgbToHsl(rgb: RGB): HSL {
     hue *= 60
   }
 
-  return { h: hue, s: sat * 100, l: light * 100, a: rgb.a }
+  return { h: hue, s: sat * 100, l: light * 100, a }
 }

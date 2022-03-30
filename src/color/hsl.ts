@@ -1,5 +1,5 @@
 import { clamp } from '../utils'
-import angle from './angle'
+import angle, { normalizeAngle } from './angle'
 import { matchHslString } from './parsers/hslString'
 import rgb from './rgb'
 import rgbToHsl from './transforms/rgbToHsl'
@@ -10,6 +10,38 @@ export interface HSL {
   s: number
   l: number
   a: number
+}
+
+/**
+ * Checks if the given value is an HSL object
+ *
+ * @param color - value to inspect
+ * @returns true/false (type predicate for `HSL` in TS)
+ */
+export function isHsl(color: any): color is HSL {
+  return (
+    typeof color.h === 'number' &&
+    typeof color.s === 'number' &&
+    typeof color.l === 'number' &&
+    typeof color.a === 'number'
+  )
+}
+
+/**
+ * Normalizes the color component values of an HSL object
+ * to range [0..360) for h, [0..100] for s,l and [0..1]
+ * for alpha
+ *
+ * @param hsl - HSL object
+ * @returns a new HSL object with the normalized values
+ */
+export function normalizeHsl(hsl: HSL): HSL {
+  return {
+    h: normalizeAngle(hsl.h),
+    s: clamp(hsl.s, 0, 100),
+    l: clamp(hsl.l, 0, 100),
+    a: clamp(hsl.a, 0, 1),
+  }
 }
 
 function hslFromHslString(colorString: string): HSL | null {
@@ -24,12 +56,12 @@ function hslFromHslString(colorString: string): HSL | null {
     alpha *= 0.01
   }
 
-  return {
+  return normalizeHsl({
     h: angle(match[0]),
-    s: clamp(hslValues[1], 0, 100),
-    l: clamp(hslValues[2], 0, 100),
-    a: clamp(alpha, 0, 1),
-  }
+    s: hslValues[1],
+    l: hslValues[2],
+    a: alpha,
+  })
 }
 
 function hslFromRgbString(colorString: string): HSL | null {

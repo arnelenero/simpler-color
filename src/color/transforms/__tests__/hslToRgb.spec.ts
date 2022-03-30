@@ -27,4 +27,11 @@ describe('hslToRgb', () => {
   it('carries over any alpha value', () => {
     expect(hslToRgb({ h: 240, s: 100, l: 50, a: 0.8 })).toHaveProperty('a', 0.8)
   })
+
+  it('normalizes out-of-range h,s,l,a values', () => {
+    const belowMin = { h: -120, s: -1, l: -1, a: -1 }
+    const aboveMax = { h: 360, s: 101, l: 101, a: 10 }
+    expect(hslToRgb(belowMin)).toEqual({ r: 0, g: 0, b: 0, a: 0 })
+    expect(hslToRgb(aboveMax)).toEqual({ r: 255, g: 255, b: 255, a: 1 })
+  })
 })

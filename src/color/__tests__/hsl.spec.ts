@@ -1,4 +1,48 @@
-import hsl from '../hsl'
+import hsl, { isHsl, normalizeHsl } from '../hsl'
+
+describe('isHsl', () => {
+  it('returns true if value is a valid HSL object', () => {
+    expect(isHsl({ h: 240, s: 100, l: 50, a: 1 })).toBe(true)
+  })
+
+  const invalid = [
+    { h: 240, s: 100, l: 50 },
+    { h: '240', s: '100', l: '50', a: '1' },
+    { r: 255, g: 0, b: 64, a: 1 },
+    [240, 100, 50, 1],
+    'hsla(240, 100%, 50%, 1)',
+    '#FF0033',
+    'blue',
+  ]
+  invalid.forEach(val => {
+    it(`returns false if value is not a valid HSL object: ${val}`, () => {
+      expect(isHsl(val)).toBe(false)
+    })
+  })
+})
+
+describe('normalizeHsl', () => {
+  it('returns a new HSL object and does not mutate the original', () => {
+    const obj = { h: 240, s: 100, l: 50, a: 1 }
+    expect(normalizeHsl(obj)).not.toBe(obj)
+  })
+
+  it('clamps h to [0..360), s,l to [0..100] and alpha to [0..1]', () => {
+    const belowMin = { h: -90, s: -1, l: -1, a: -1 }
+    const aboveMax = { h: 360, s: 101, l: 101, a: 10 }
+    expect(normalizeHsl(belowMin)).toEqual({ h: 270, s: 0, l: 0, a: 0 })
+    expect(normalizeHsl(aboveMax)).toEqual({ h: 0, s: 100, l: 100, a: 1 })
+  })
+
+  it('does not modify h value if it is NaN', () => {
+    expect(normalizeHsl({ h: NaN, s: 0, l: 0, a: 1 }).h).toBeNaN()
+  })
+
+  it('does not round off h,s,l values that are within range', () => {
+    const nonInteger = { h: 239.5, s: 0.01, l: 33.333, a: 0.9 }
+    expect(normalizeHsl(nonInteger)).toEqual(nonInteger)
+  })
+})
 
 describe('hsl', () => {
   let values: string[]
