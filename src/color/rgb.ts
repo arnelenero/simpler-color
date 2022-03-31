@@ -1,5 +1,5 @@
 import { clamp } from '../utils'
-import hsl from './hsl'
+import hsl, { hslFromColorString } from './hsl'
 import named from './named'
 import { matchHexString } from './parsers/hexString'
 import { matchRgbString } from './parsers/rgbString'
@@ -44,10 +44,7 @@ export function normalizeRgb(rgb: RGB): RGB {
   }
 }
 
-function rgbFromHexString(colorString: string): RGB | null {
-  const match = matchHexString(colorString)
-  if (!match) return null
-
+function rgbFromParsedHexString(match: string[]): RGB {
   const rgbValues = match.map(val => {
     // Expand if value is shorthand (single digit) hex
     if (val.length === 1) {
@@ -63,10 +60,7 @@ function rgbFromHexString(colorString: string): RGB | null {
   return { r: rgbValues[0], g: rgbValues[1], b: rgbValues[2], a: alpha }
 }
 
-function rgbFromRgbString(colorString: string): RGB | null {
-  const match = matchRgbString(colorString)
-  if (!match) return null
-
+function rgbFromParsedRgbString(match: string[]): RGB {
   const rgbValues = match.map((val, index) => {
     let num = parseFloat(val)
     if (val.indexOf('%') > -1) {
@@ -88,18 +82,17 @@ function rgbFromRgbString(colorString: string): RGB | null {
 }
 
 function rgbFromHslString(colorString: string): RGB | null {
-  const hslColor = hsl(colorString, true)
+  const hslColor = hslFromColorString(colorString)
   return hslColor ? hslToRgb(hslColor) : null
 }
 
 /**
- * Creates an RGB model from a given color string
+ * Creates an RGB model from a given RGB-based color string
  *
  * @param colorString - CSS color string
- * @param only - when `true`, does not convert non-RGB color
  * @returns an `{r,g,b,a}` color object (or `null` if invalid color string)
  */
-export default function rgb(colorString: string, only?: boolean): RGB | null {
+export function rgbFromColorString(colorString: string): RGB | null {
   colorString = colorString.trim()
 
   if (colorString.toLowerCase() === 'transparent')
@@ -111,9 +104,27 @@ export default function rgb(colorString: string, only?: boolean): RGB | null {
     colorString = hexFromName
   }
 
-  return (
-    rgbFromHexString(colorString) ??
-    rgbFromRgbString(colorString) ??
-    ((!only && rgbFromHslString(colorString)) || null)
-  )
+  let match: string[] | null
+  if ((match = matchHexString(colorString)) !== null)
+    return rgbFromParsedHexString(match)
+  else if ((match = matchRgbString(colorString)) !== null)
+    return rgbFromParsedRgbString(match)
+
+  return null
+}
+
+/**
+ * Creates an RGB model from a given color string
+ *
+ * @param colorString - CSS color string
+ * @returns an `{r,g,b,a}` color object (or `null` if invalid color string)
+ * @throws if argument is not a valid color string
+ */
+export default function rgb(colorString: string): RGB {
+  const rgbObj =
+    rgbFromColorString(colorString) ?? rgbFromHslString(colorString)
+
+  if (rgbObj === null) throw new Error('Invalid color string')
+
+  return rgbObj
 }

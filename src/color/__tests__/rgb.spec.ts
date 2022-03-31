@@ -123,11 +123,7 @@ describe('rgb', () => {
     })
   })
 
-  it('does not recognize non-RGB string if `only` flag is true', () => {
-    expect(rgb('hsl(315, 100%, 60%)', true)).toBeNull()
-  })
-
-  it('returns null if not a valid color string', () => {
-    expect(rgb('foo')).toBeNull()
+  it('throws if argument is not a valid color string', () => {
+    expect(() => rgb('foo')).toThrow()
   })
 })

@@ -118,14 +118,7 @@ describe('hsl', () => {
     expect(hsl('transparent')).toEqual({ h: NaN, s: 0, l: 0, a: 0 })
   })
 
-  values = ['#FF33CC', 'rgb(255, 51, 204)', 'blue', 'transparent']
-  values.forEach(color => {
-    it(`does not recognize non-HSL string if \`only\` flag is true: ${color}`, () => {
-      expect(hsl(color, true)).toBeNull()
-    })
-  })
-
-  it('returns null if not a valid color string', () => {
-    expect(hsl('foo')).toBeNull()
+  it('throws if argument is not a valid color string', () => {
+    expect(() => hsl('foo')).toThrow()
   })
 })

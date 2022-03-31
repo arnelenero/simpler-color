@@ -1,7 +1,7 @@
 import { clamp } from '../utils'
 import angle, { normalizeAngle } from './angle'
 import { matchHslString } from './parsers/hslString'
-import rgb from './rgb'
+import rgb, { rgbFromColorString } from './rgb'
 import rgbToHsl from './transforms/rgbToHsl'
 
 /** Object model of a color in the HSL space */
@@ -44,10 +44,7 @@ export function normalizeHsl(hsl: HSL): HSL {
   }
 }
 
-function hslFromHslString(colorString: string): HSL | null {
-  const match = matchHslString(colorString)
-  if (!match) return null
-
+function hslFromParsedHslString(match: string[]): HSL {
   const hslValues = match.map(val => parseFloat(val))
 
   let alpha = hslValues[3] ?? 1
@@ -65,22 +62,38 @@ function hslFromHslString(colorString: string): HSL | null {
 }
 
 function hslFromRgbString(colorString: string): HSL | null {
-  const rgbColor = rgb(colorString, true)
+  const rgbColor = rgbFromColorString(colorString)
   return rgbColor ? rgbToHsl(rgbColor) : null
+}
+
+/**
+ * Creates an HSL model from a given HSL-based color string
+ *
+ * @param colorString - CSS color string
+ * @returns an `{h,s,l,a}` color object (or `null` if invalid color string)
+ */
+export function hslFromColorString(colorString: string): HSL | null {
+  colorString = colorString.trim()
+
+  let match: string[] | null
+  if ((match = matchHslString(colorString)) !== null)
+    return hslFromParsedHslString(match)
+
+  return null
 }
 
 /**
  * Creates an HSL model from a given color string
  *
  * @param colorString - CSS color string
- * @param only - when `true`, does not convert non-RGB color
- * @returns an `{h,s,l,a}` color object (or `null` if invalid color string)
+ * @returns an `{h,s,l,a}` color object
+ * @throws if argument is not a valid color string
  */
-export default function hsl(colorString: string, only?: boolean): HSL | null {
-  colorString = colorString.trim()
+export default function hsl(colorString: string): HSL {
+  const hslObj =
+    hslFromColorString(colorString) ?? hslFromRgbString(colorString)
 
-  return (
-    hslFromHslString(colorString) ??
-    ((!only && hslFromRgbString(colorString)) || null)
-  )
+  if (hslObj === null) throw new Error('Invalid color string')
+
+  return hslObj
 }
