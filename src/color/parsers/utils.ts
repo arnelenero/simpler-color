@@ -9,6 +9,19 @@ export function exact(regex: RegExp): RegExp {
   return new RegExp(`^${regex.source}$`, regex.flags)
 }
 
+/**
+ * Extracts individual color components from a color string
+ * match array
+ *
+ * @param match
+ * @returns a string array containing the extracted values
+ */
+export function extractValuesFromMatch(match: RegExpExecArray): string[] {
+  return match
+    .slice(1) // get only the values from regex capturing groups
+    .filter(val => val !== undefined) // remove undefined items (e.g. alpha)
+}
+
 /** Regular expression for valid CSS number */
 export const cssNumberMatcher = /[+-]?(?=\.\d|\d)\d*(?:\.\d+)?(?:[eE][+-]?\d+)?/
 

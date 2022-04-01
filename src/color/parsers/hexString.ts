@@ -1,5 +1,6 @@
-import { exact } from './utils'
+import { exact, extractValuesFromMatch } from './utils'
 
+/** Color string in `#rrggbb(aa)` or `#rgb(a)` hex format */
 export type HexString = `#${string}`
 
 const hex = /[0-9a-fA-F]/.source
@@ -39,6 +40,5 @@ export function matchHexString(colorString: string): string[] | null {
   const match =
     exact(hexColorMatcher).exec(colorString) ??
     exact(shortHexColorMatcher).exec(colorString)
-
-  return match?.slice(1) ?? null
+  return match ? extractValuesFromMatch(match) : null
 }

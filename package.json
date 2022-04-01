@@ -1,6 +1,6 @@
 {
   "name": "simpler-color",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Simpler Color - Create your own complete color system fast and easy!",
   "keywords": [
     "javascript",
@@ -34,8 +34,7 @@
     "test:cov-local": "npm test -- --coverage"
   },
   "dependencies": {
-    "@babel/runtime": "^7.17.8",
-    "color": "^4.2.0"
+    "@babel/runtime": "^7.17.8"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.6",

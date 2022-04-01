@@ -60,9 +60,9 @@ describe('matchRgbString', () => {
     expect(matchRgbString(str)).toEqual(['-127', '-255', '-64', '-0.1'])
   })
 
-  it('returns alpha value as undefined if not specified in string', () => {
+  it('returns only a 3-item array if color has no alpha value', () => {
     const str = 'rgb(127, 255, 64)'
-    expect(matchRgbString(str)).toEqual(['127', '255', '64', undefined])
+    expect(matchRgbString(str)).toEqual(['127', '255', '64'])
   })
 
   it('returns null if string is not a valid rgb string', () => {

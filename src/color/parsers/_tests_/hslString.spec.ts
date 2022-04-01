@@ -66,9 +66,9 @@ describe('matchHslString', () => {
     expect(matchHslString(str)).toEqual(['-240', '-100', '-50', '-0.1'])
   })
 
-  it('returns alpha value as undefined if not specified in string', () => {
+  it('returns only a 3-item array if color has no alpha value', () => {
     const str = 'hsl(240, 100%, 50%)'
-    expect(matchHslString(str)).toEqual(['240', '100', '50', undefined])
+    expect(matchHslString(str)).toEqual(['240', '100', '50'])
   })
 
   it('returns null if string is not a valid hsl string', () => {
