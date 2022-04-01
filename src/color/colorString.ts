@@ -5,6 +5,15 @@ import hslToRgb from './transforms/hslToRgb'
 import type { HSL } from './hsl'
 import type { RGB } from './rgb'
 
+function roundRgb(rgb: RGB): RGB {
+  return {
+    r: Math.round(rgb.r),
+    g: Math.round(rgb.g),
+    b: Math.round(rgb.b),
+    a: rgb.a, // do not round off alpha
+  }
+}
+
 function rgbToHexString(rgb: RGB): string {
   const int =
     ((Math.round(rgb.r) & 0xff) << 16) +
@@ -17,6 +26,7 @@ function rgbToHexString(rgb: RGB): string {
 }
 
 function rgbToRgbaString(rgb: RGB): string {
+  rgb = roundRgb(rgb)
   return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${rgb.a})`
 }
 

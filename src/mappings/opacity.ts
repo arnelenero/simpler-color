@@ -1,6 +1,5 @@
-import Color from 'color'
-
-import normalize from '../normalize'
+import colorString from '../color/colorString'
+import rgb from '../color/rgb'
 
 import type { ColorMapping } from '../palette'
 
@@ -16,11 +15,11 @@ import type { ColorMapping } from '../palette'
 const opacity: ColorMapping = (baseColor, key) => {
   if (typeof key !== 'number') return baseColor
 
-  const base = Color(baseColor)
+  const base = rgb(baseColor)
 
   const targetA = Math.min(Math.max(key, 0), 1)
 
-  return normalize(base.alpha(targetA))
+  return colorString({ ...base, a: targetA })
 }
 
 export default opacity

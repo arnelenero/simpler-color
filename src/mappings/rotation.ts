@@ -1,6 +1,5 @@
-import Color from 'color'
-
-import normalize from '../normalize'
+import colorString from '../color/colorString'
+import hsl from '../color/hsl'
 
 import type { ColorMapping } from '../palette'
 
@@ -18,11 +17,11 @@ import type { ColorMapping } from '../palette'
 const rotation: ColorMapping = (baseColor, key) => {
   if (typeof key !== 'number' || key === 0) return baseColor
 
-  const base = Color(baseColor)
+  const base = hsl(baseColor)
 
-  const targetH = (base.hue() + key) % 360
+  const targetH = (base.h + key) % 360
 
-  return normalize(base.hue(targetH))
+  return colorString({ ...base, h: targetH })
 }
 
 export default rotation
