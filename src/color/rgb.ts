@@ -1,5 +1,5 @@
 import { clamp } from '../utils'
-import hsl, { hslFromColorString } from './hsl'
+import { hslFromColorString } from './hsl'
 import named from './named'
 import { matchHexString } from './parsers/hexString'
 import { matchRgbString } from './parsers/rgbString'

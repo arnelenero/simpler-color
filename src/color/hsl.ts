@@ -1,7 +1,7 @@
 import { clamp } from '../utils'
 import angle, { normalizeAngle } from './angle'
 import { matchHslString } from './parsers/hslString'
-import rgb, { rgbFromColorString } from './rgb'
+import { rgbFromColorString } from './rgb'
 import rgbToHsl from './transforms/rgbToHsl'
 
 /** Object model of a color in the HSL space */
