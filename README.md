@@ -121,7 +121,7 @@ The final step is to map each UI role to a specific color value from one of the 
 
 ## Recipes
 
-- [Using the built-in color mapping functions](#using-the-built-in-color-mapping-functions)
+- [Using the built-in color mapping functions](#built-ins)
   - [Lightness](#lightness)
   - [Saturation](#saturation)
   - [Rotation](#rotation)
