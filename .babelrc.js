@@ -8,8 +8,8 @@ module.exports = {
       '@babel/env',
       {
         loose,
-        modules: false,
-        targets: commonjs ? { ie: 11 } : { node: 'current' },
+        //modules: false,
+        targets: commonjs ? { ie: 11 } : { node: '12' },
       },
     ],
   ],
