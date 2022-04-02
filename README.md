@@ -16,7 +16,7 @@ Simpler Color makes it super easy to implement your own CSS-compliant color syst
 
 ## Easy as 1-2-3!
 
-**Step 1:** Install simpler-color
+**Step 1:** Install Simpler Color
 
 ```
 npm install simpler-color
@@ -33,7 +33,7 @@ const baseColors = {
 }
 ```
 
-**—OR—** just give simpler-color ONE base color, and it will generate the rest!
+**—OR—** just give Simpler Color ONE base color, and it will generate the rest!
 
 ```js
 import { harmony } from 'simpler-color'
@@ -82,7 +82,7 @@ You decide what sort of relationship should be between colors in the palette. Th
 
 Each color in a palette is accessed by a unique _color key_, which is a string or number that indicates its relationship with the base color. The color values are determined by a _color mapping function_, which returns a specific color value for a given color key.
 
-Palettes are automatically created by simpler-color based on your specified base colors. By default, it generates **tonal** palettes, with specific tones accessed by passing a numeric key between 0 and 100, which represents % _lightness_ (0 = black, 100 = white). Any value in between generates a specific shade of the base color. So, for example, if your `primary` palette is based on green (like in the illustration above), `primary(40)` gives you green with 40% lightness.
+Palettes are automatically created by Simpler Color based on your specified base colors. By default, it generates **tonal** palettes, with specific tones accessed by passing a numeric key between 0 and 100, which represents % _lightness_ (0 = black, 100 = white). Any value in between generates a specific shade of the base color. So, for example, if your `primary` palette is based on green (like in the illustration above), `primary(40)` gives you green with 40% lightness.
 
 You can, of course, define your own color mapping function to override the default. This also means that you can define a completely different set of color keys, which can be any of these common alternatives:
 
@@ -102,7 +102,7 @@ Common additional palettes can be any of (but not limited to) these:
 - _neutral_: typically shades of gray or similar neutral tones
 - _error_: normally a brilliant red hue, to indicate errors
 
-To ensure consistency of your color set, simpler-color enforces that you use the same set of color keys (and thus the same color mapping function) across all your palettes.
+To ensure consistency of your color set, Simpler Color enforces that you use the same set of color keys (and thus the same color mapping function) across all your palettes.
 
 ### Color Scheme
 
@@ -117,35 +117,27 @@ Some common examples of UI role:
 - surface/background color
 - text color
 
-The final step is to map each UI role to a specific color value from one of the palettes in your color set. Each such mapping gives us one color scheme. By using a consistent set of color roles, simpler-color helps ensure that your UI can easily and safely switch between color schemes.
+The final step is to map each UI role to a specific color value from one of the palettes in your color set. Each such mapping gives us one color scheme. By using a consistent set of color roles, Simpler Color helps ensure that your UI can easily and safely switch between color schemes.
 
 ## Recipes
 
-### Defining a custom color mapping function
+- [Using the built-in color mapping functions](#built-ins)
+  - [Lightness](#lightness)
+  - [Saturation](#saturation)
+  - [Rotation](#rotation)
+  - [Analogue](#analogue)
+  - [Complement](#complement)
+  - [Triad](#triad)
+  - [Opacity](#opacity)
+- [Defining a custom color mapping function](#custom-colormap)
 
-```js
-import { complement, saturation } from 'simpler-color'
-
-function awesomeColor(baseColor, key) {
-  return complement(saturation(baseColor, 80), key)
-}
-
-const uiColors = colorScheme(
-  'blue',
-  colors => ({
-    primaryButton: colors.primary(0),
-    floatingActionButton: colors.primary(2),
-    ...etc,
-  }),
-  {
-    colorMapping: awesomeColor, // 👈
-  },
-)
-```
+<a name="built-ins"></a>
 
 ### Using the built-in color mapping functions
 
-Color mapping functions are not only used to generate entire palettes, but also to calculate individual colors based on another. The format is always `fn(baseColor, key)` where the valid `key` values vary depending on the function. They can also be nested to perform more complex calculations.
+Color mapping functions are not only used to generate entire palettes, but also to calculate individual colors, such as palette base colors, based on another. This helps you ensure that base colors for your other palettes are "visually harmonious" with your primary palette's.
+
+The format is always `fn(baseColor, key)` where the valid `key` values vary depending on the function. They can also be nested to perform more complex calculations.
 
 ```js
 import { analogue, complement, saturation } from 'simpler-color'
@@ -158,15 +150,7 @@ const baseColors = {
 }
 ```
 
-#### Saturation
-
-<img src="./docs/assets/saturation.png" alt="saturation scale of green" height="50"/>
-
-```js
-saturation(baseColor, percentSaturation)
-```
-
-Generates a new color value by adjusting the base color's % saturation (the "S" value in HSL color).
+Below is the description of each of the built-in color mapping functions:
 
 #### Lightness
 
@@ -177,6 +161,16 @@ lightness(baseColor, percentLightness)
 ```
 
 Generates a new color value by adjusting the base color's % lightness (the "L" value in HSL color). This is the default color mapping used to generate tonal palettes.
+
+#### Saturation
+
+<img src="./docs/assets/saturation.png" alt="saturation scale of green" height="50"/>
+
+```js
+saturation(baseColor, percentSaturation)
+```
+
+Generates a new color value by adjusting the base color's % saturation (the "S" value in HSL color).
 
 #### Rotation
 
@@ -231,3 +225,51 @@ opacity(baseColor, alpha)
 ```
 
 Generates a new color value by adjusting the base color's opacity (the alpha or "A" value in RGBA) between 0 (transparent) and 1 (opaque).
+
+[Back to recipes](#recipes)
+
+<a name="custom-colormap"></a>
+
+### Defining a custom color mapping function
+
+Although the default color mapping function already gives you great looking tonal palettes, sometimes your color system might require a different approach, such as:
+
+- a different set of color keys (e.g. strings or discrete numbers)
+- a different formula for calculating colors in your palettes
+
+This is where a custom color mapping function comes in. For example, here is a modified version of the default (`lightness`) color mapping function that accepts a string for `key` instead of a number from 0-100.
+
+```js
+import { lightness } from 'simpler-color'
+
+function shade(baseColor, key) {
+  const lightnessValues = {
+    darker: 10,
+    dark: 30,
+    main: 40,
+    light: 60,
+    lighter: 80,
+  }
+  return lightness(baseColor, lightnessValues[key])
+}
+```
+
+You can then tell Simpler Color to use this custom color mapping instead of the default:
+
+```js
+const uiColors = colorScheme(
+  'blue',
+  colors => ({
+    // notice the color keys used   👇
+    primaryButton: colors.primary('main'),
+    floatingActionButton: colors.accent('light'),
+    navBar: colors.secondary('lighter'),
+    ...etc,
+  }),
+  {
+    colorMapping: shade, // 👈 custom color mapping
+  },
+)
+```
+
+[Back to recipes](#recipes)
