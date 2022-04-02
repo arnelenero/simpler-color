@@ -226,6 +226,8 @@ opacity(baseColor, alpha)
 
 Generates a new color value by adjusting the base color's opacity (the alpha or "A" value in RGBA) between 0 (transparent) and 1 (opaque).
 
+[Back to recipes](#recipes)
+
 <a name="custom-colormap"></a>
 
 ### Defining a custom color mapping function
@@ -269,3 +271,5 @@ const uiColors = colorScheme(
   },
 )
 ```
+
+[Back to recipes](#recipes)
