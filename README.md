@@ -121,6 +121,18 @@ The final step is to map each UI role to a specific color value from one of the 
 
 ## Recipes
 
+- [Using the built-in color mapping functions](#using-the-built-in-color-mapping-functions)
+  - [Lightness](#lightness)
+  - [Saturation](#saturation)
+  - [Rotation](#rotation)
+  - [Analogue](#analogue)
+  - [Complement](#complement)
+  - [Triad](#triad)
+  - [Opacity](#opacity)
+- [Defining a custom color mapping function](#custom-colormap)
+
+<a name="built-ins"></a>
+
 ### Using the built-in color mapping functions
 
 Color mapping functions are not only used to generate entire palettes, but also to calculate individual colors, such as palette base colors, based on another. This helps you ensure that base colors for your other palettes are "visually harmonious" with your primary palette's.
@@ -140,16 +152,6 @@ const baseColors = {
 
 Below is the description of each of the built-in color mapping functions:
 
-#### Saturation
-
-<img src="./docs/assets/saturation.png" alt="saturation scale of green" height="50"/>
-
-```js
-saturation(baseColor, percentSaturation)
-```
-
-Generates a new color value by adjusting the base color's % saturation (the "S" value in HSL color).
-
 #### Lightness
 
 <img src="./docs/assets/palette.png" alt="lightness scale of green" height="50"/>
@@ -159,6 +161,16 @@ lightness(baseColor, percentLightness)
 ```
 
 Generates a new color value by adjusting the base color's % lightness (the "L" value in HSL color). This is the default color mapping used to generate tonal palettes.
+
+#### Saturation
+
+<img src="./docs/assets/saturation.png" alt="saturation scale of green" height="50"/>
+
+```js
+saturation(baseColor, percentSaturation)
+```
+
+Generates a new color value by adjusting the base color's % saturation (the "S" value in HSL color).
 
 #### Rotation
 
@@ -213,6 +225,8 @@ opacity(baseColor, alpha)
 ```
 
 Generates a new color value by adjusting the base color's opacity (the alpha or "A" value in RGBA) between 0 (transparent) and 1 (opaque).
+
+<a name="custom-colormap"></a>
 
 ### Defining a custom color mapping function
 
