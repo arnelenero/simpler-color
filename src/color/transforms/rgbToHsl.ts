@@ -1,7 +1,6 @@
-import { clamp } from '../../utils'
+import { normalizeRgb, RGB } from '../rgb'
 
 import type { HSL } from '../hsl'
-import { normalizeRgb, RGB } from '../rgb'
 
 /**
  * Converts from RGB to HSL color model

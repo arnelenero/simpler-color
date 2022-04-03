@@ -13,6 +13,11 @@ export { default as triad } from './mappings/triad'
 
 export { default as harmony } from './presets/harmony'
 
+export { default as hsl, isHsl } from './color/hsl'
+export { default as rgb, isRgb } from './color/rgb'
+export { default as hslToRgb } from './color/transforms/hslToRgb'
+export { default as rgbToHsl } from './color/transforms/rgbToHsl'
+
 export type {
   ColorRoleMapping,
   ColorScheme,
@@ -21,3 +26,5 @@ export type {
 export type { BaseColors, ColorSet } from './colorSet'
 export type { ColorMapping, Palette } from './palette'
 export type { HarmonyBaseColors, HarmonyColors } from './presets/harmony'
+export type { HSL } from './color/hsl'
+export type { RGB } from './color/rgb'
