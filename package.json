@@ -21,6 +21,7 @@
     "es",
     "types"
   ],
+  "sideEffects": false,
   "scripts": {
     "build:lib": "cross-env BABEL_ENV=commonjs babel build --out-dir lib",
     "build:es": "babel build --out-dir es",
