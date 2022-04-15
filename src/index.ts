@@ -5,7 +5,7 @@ export { default as palette } from './palette'
 
 export { default as analogue } from './mappings/analogue'
 export { default as complement } from './mappings/complement'
-export { default as lightness } from './mappings/saturation'
+export { default as lightness } from './mappings/lightness'
 export { default as opacity } from './mappings/opacity'
 export { default as rotation } from './mappings/rotation'
 export { default as saturation } from './mappings/saturation'
