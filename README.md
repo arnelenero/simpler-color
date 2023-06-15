@@ -1,7 +1,6 @@
 # Simpler Color
 
 [![npm](https://img.shields.io/npm/v/simpler-color)](https://www.npmjs.com/package/simpler-color)
-[![build](https://img.shields.io/travis/arnelenero/simpler-color)](https://travis-ci.com/github/arnelenero/simpler-color)
 [![coverage](https://img.shields.io/coverallsCoverage/github/arnelenero/simpler-color)](https://coveralls.io/github/arnelenero/simpler-color)
 [![license](https://img.shields.io/github/license/arnelenero/simpler-color)](https://opensource.org/licenses/MIT)
 
